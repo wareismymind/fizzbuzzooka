@@ -4,9 +4,14 @@
 #include <functional>
 #include <map>
 
-template<class K, class V>
+template<class K, class V, class Map>
 class flexibuzz
 {
+private:
+
+    template<typename T>
+    using const_iter_t = typename std::iterator_traits<typename T::const_iterator>::value_type;
+
 public:
 
     flexibuzz(
@@ -16,7 +21,15 @@ public:
             _match(match),
             _map(map),
             _values(values)
-    {}
+    {
+        static_assert(
+            std::is_same<std::decay_t<K>, std::decay_t<typename const_iter_t<Map>::first_type>>::value,
+            "Type 'K' must match the key type of the iterator for type 'Map'");
+
+        static_assert(
+            std::is_same<std::decay_t<V>, std::decay_t<typename const_iter_t<Map>::second_type>>::value,
+            "Type 'V' must match the value type of the iterator for type 'Map'");
+    }
 
     V operator[] (const K& k) const
     {

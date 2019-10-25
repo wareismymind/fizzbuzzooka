@@ -1,2 +1,2 @@
 fb : main.cpp flexibuzz.hpp
-	$(CXX) -o $@ $^
+	$(CXX) -std=c++17 -o $@ $^

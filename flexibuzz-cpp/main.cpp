@@ -28,7 +28,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    flexibuzz<int, std::string> fb(
+    flexibuzz<int, std::string, std::map<int, std::string>> fb(
         [] (int a, int b) { return a % b == 0; },
         [] (int a) { return std::to_string(a); },
         std::map<int, std::string> {
